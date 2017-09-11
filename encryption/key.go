@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/jjeffery/errors"
-	"xyris.io/edd/common/token/pkcs5"
 )
 
 const (
@@ -17,7 +16,7 @@ const (
 )
 
 var (
-	errInvalidCiphertext = errors.New("invalid cipher text")
+	errInvalidCiphertext = errors.New("invalid ciphertext")
 )
 
 // Key is a 256 bit encryption key.
@@ -47,7 +46,7 @@ func (key Key) Encrypt(cleartext []byte) (ciphertext string, err error) {
 	header := newHeader(block)
 
 	// Pad the clear text and encrypt.
-	paddedMsg := pkcs5.Pad(cleartext, block.BlockSize())
+	paddedMsg := pkcs5Pad(cleartext, block.BlockSize())
 	iv := header.IV(block)
 	cbcEncrypter := cipher.NewCBCEncrypter(block, iv)
 	cbcEncrypter.CryptBlocks(paddedMsg, paddedMsg)
@@ -105,7 +104,7 @@ func (key Key) Decrypt(ciphertext string) (cleartext []byte, err error) {
 	iv := header.IV(block)
 	cbcDecrypter := cipher.NewCBCDecrypter(block, iv)
 	cbcDecrypter.CryptBlocks(msg, msg)
-	msg, err = pkcs5.Unpad(msg)
+	msg, err = pkcs5Unpad(msg)
 	if err != nil {
 		return nil, err
 	}
