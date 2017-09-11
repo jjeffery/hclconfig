@@ -11,6 +11,6 @@ install:
   - dep ensure
 
 script:
-  - go list -f '"go test -coverprofile={{.Dir}}/.coverprofile {{.ImportPath}}"{{end}}' ./... | grep -v vendor/ | grep -v cmd/ | xargs -L 1 sh -c
+  - go list -f '"go test -coverprofile={{.Dir}}/.coverprofile {{.ImportPath}}"' ./... | grep -v vendor/ | grep -v cmd/ | xargs -L 1 sh -c
   - $GOPATH/bin/gover
   - $GOPATH/bin/goveralls -coverprofile=gover.coverprofile -service=travis-ci
