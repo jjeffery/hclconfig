@@ -10,9 +10,9 @@ import (
 	"github.com/jjeffery/errors"
 )
 
-// Download the contents of an S3 bucket. The caller is responsible for
+// Get the contents of an S3 bucket. The caller is responsible for
 // closing the body.
-func Download(bucket, key string) (etag string, modified time.Time, body io.ReadCloser, err error) {
+func Get(bucket, key string) (etag string, modified time.Time, body io.ReadCloser, err error) {
 	s3svc := s3.New(AWSSession())
 	output, err := s3svc.GetObject(&s3.GetObjectInput{
 		Bucket: aws.String(bucket),
@@ -33,6 +33,29 @@ func Download(bucket, key string) (etag string, modified time.Time, body io.Read
 	}
 	body = output.Body
 	return etag, modified, body, nil
+}
+
+// Head the contents of an S3 bucket.
+func Head(bucket, key string) (etag string, modified time.Time, err error) {
+	s3svc := s3.New(AWSSession())
+	output, err := s3svc.HeadObject(&s3.HeadObjectInput{
+		Bucket: aws.String(bucket),
+		Key:    aws.String(key),
+	})
+	if err != nil {
+		err = errors.Wrap(err, "cannot download from S3").With(
+			"bucket", bucket,
+			"key", key,
+		)
+		return etag, modified, err
+	}
+	if output.ETag != nil {
+		etag = *output.ETag
+	}
+	if output.LastModified != nil {
+		modified = *output.LastModified
+	}
+	return etag, modified, nil
 }
 
 // HasChanged determines whether the S3 object has changed.

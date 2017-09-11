@@ -27,6 +27,11 @@ func Get(location string) (*File, error) {
 		)
 	}
 	decrypter, err := amzn.NewKey(node)
+	if err != nil {
+		return nil, errors.Wrap(err).With(
+			"location", location,
+		)
+	}
 	if err = astcrypt.Decrypt(node, decrypter); err != nil {
 		return nil, errors.Wrap(err).With(
 			"location", location,
@@ -72,5 +77,10 @@ func (f *File) HasChanged() (bool, error) {
 // Decode decodes the contents of the configuration file into the
 // structure pointed to by v.
 func (f *File) Decode(v interface{}) error {
-	return hcl.DecodeObject(v, f.Contents)
+	if err := hcl.DecodeObject(v, f.Contents); err != nil {
+		return errors.Wrap(err).With(
+			"location", f.Location,
+		)
+	}
+	return nil
 }
