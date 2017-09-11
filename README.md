@@ -60,7 +60,7 @@ go func() {
 
 ## Encryption
 
-Confidential information is encrypted using AES-256 CBC + HMAC-SHA256.
+Confidential information is encrypted at rest using AES-256 CBC + HMAC-SHA256.
 
 The 256-bit data encryption key is stored as a ciphertext blob in the
 configuration file. The data encryption key is encrypted using 
