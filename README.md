@@ -103,6 +103,7 @@ encryption {
 }
 ```
 
+## hclconfig CLI utility
 A command line utility is included in `./cmd/hclconfig`, which makes it easy to
 encrypt confidential information.
 ```
@@ -120,5 +121,14 @@ Available Commands:
 
 Use "hclconfig [command] --help" for more information about a command.
 ```
+
+To install the `hclconfig` CLI:
+```bash
+$ go get -u github.com/jjeffery/hclconfig/cmd/hclconfig
+```
+
+## License
+
+[MIT](https://raw.githubusercontent.com/jjeffery/hclconfig/master/LICENSE.md)
 
 For more information, refer to the [Godoc](https://godoc.org/github.com/jjeffery/hclconfig) documentation.
