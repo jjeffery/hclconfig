@@ -6,7 +6,8 @@
 [![GoReportCard](https://goreportcard.com/badge/github.com/jjeffery/hclconfig)](https://goreportcard.com/report/github.com/jjeffery/hclconfig)
 
 Package hclconfig is designed to reduce the effort required to access
-a configuration file.
+a configuration file. It is particularly useful for cloud-based server 
+applications that load configuration data via HTTP.
 
 The main features this package provides are:
 
