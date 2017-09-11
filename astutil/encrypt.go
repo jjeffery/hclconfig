@@ -138,7 +138,7 @@ func (w *encryptWalker) Walk(node ast.Node) (newNode ast.Node, keepWalking bool)
 		Rbrace: val.Token.Pos,
 		List: &ast.ObjectList{
 			Items: []*ast.ObjectItem{
-				&ast.ObjectItem{
+				{
 					Keys: []*ast.ObjectKey{
 						{
 							Token: token.Token{

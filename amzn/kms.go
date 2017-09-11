@@ -8,8 +8,8 @@ import (
 	"github.com/aws/aws-sdk-go/service/kms"
 	"github.com/hashicorp/hcl"
 	"github.com/hashicorp/hcl/hcl/ast"
-	"github.com/jjeffery/hclconfig/encryption"
 	"github.com/jjeffery/errors"
+	"github.com/jjeffery/hclconfig/encryption"
 )
 
 var (
