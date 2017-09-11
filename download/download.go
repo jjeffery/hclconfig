@@ -10,8 +10,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jjeffery/errkind"
-
 	"github.com/jjeffery/errors"
 	"github.com/jjeffery/hclconfig/amzn"
 )
@@ -30,7 +28,7 @@ type File struct {
 // if the file has changed.
 func Head(location string) (*File, error) {
 	// TODO(jpj): implement
-	return nil, errkind.NotImplemented()
+	return nil, errors.New("not implemented yet")
 }
 
 // Get returns a file from the specified location, including the body.

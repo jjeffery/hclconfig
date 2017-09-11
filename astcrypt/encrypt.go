@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/hcl"
 	"github.com/hashicorp/hcl/hcl/ast"
 	"github.com/hashicorp/hcl/hcl/token"
-	"github.com/pkg/errors"
+	"github.com/jjeffery/errors"
 )
 
 // Encrypter is an interface for encrypting text.

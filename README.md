@@ -1,6 +1,8 @@
 # hclconfig:  Configuration file support for cloud-based servers
 [![GoDoc](https://godoc.org/github.com/jjeffery/hclconfig?status.svg)](https://godoc.org/github.com/jjeffery/hclconfig)
 [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/jjeffery/hclconfig/master/LICENSE.md)
+[![Build Status (Linux)](https://travis-ci.org/jjeffery/hclconfig.svg?branch=master)](https://travis-ci.org/jjeffery/hclconfig)
+[![Coverage Status](https://codecov.io/github/jjeffery/hclconfig/badge.svg?branch=master)](https://codecov.io/github/jjeffery/hclconfig?branch=master)
 [![GoReportCard](https://goreportcard.com/badge/github.com/jjeffery/hclconfig)](https://goreportcard.com/report/github.com/jjeffery/hclconfig)
 
 Package hclconfig is designed to reduce the effort required to access
