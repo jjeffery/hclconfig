@@ -33,10 +33,9 @@ func ExampleFile_Decode() {
 
 	var config struct {
 		Database struct {
-			Provider       string
-			DataSourceName string
+			Provider  string
+			SecretDSN string
 		}
-		Provider string
 	}
 
 	if err := file.Decode(&config); err != nil {
@@ -53,7 +52,7 @@ func ExampleFile_Decode() {
 
 	database {
 		provider = "postgresql"
-		dataSourceName {
+		secretDSN {
 			ciphertext = "<cipher-text-blob>"
 		}
 	}

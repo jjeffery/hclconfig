@@ -13,7 +13,7 @@ import (
 
 // Get downloads the configuration file from the location, parses it
 // and decrypts any sensitive data.
-// The location can be a http/https URL, and S3 URL, or a local
+// The location can be a HTTP/HTTPS URL, an S3 URL, or a local
 // file path.
 func Get(location string) (*File, error) {
 	d, err := download.Get(location)

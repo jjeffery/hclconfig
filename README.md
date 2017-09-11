@@ -44,7 +44,7 @@ exitIfError(err)
 db, err := sql.Open(db.Database.Provider, db.Database.SecretDSN)
 exitIfError(err)
 
-// simple example of a goroutine that will initiate gracefult shutdown
+// simple example of a goroutine that will initiate graceful shutdown
 // if it detects a change in the configuration file
 go func() {
     for {
