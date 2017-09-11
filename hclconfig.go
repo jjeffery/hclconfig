@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/hcl/hcl/ast"
 	"github.com/jjeffery/errors"
 	"github.com/jjeffery/hclconfig/amzn"
-	"github.com/jjeffery/hclconfig/astutil"
+	"github.com/jjeffery/hclconfig/astcrypt"
 	"github.com/jjeffery/hclconfig/download"
 )
 
@@ -27,7 +27,7 @@ func Get(location string) (*File, error) {
 		)
 	}
 	decrypter, err := amzn.NewKey(node)
-	if err = astutil.Decrypt(node, decrypter); err != nil {
+	if err = astcrypt.Decrypt(node, decrypter); err != nil {
 		return nil, errors.Wrap(err).With(
 			"location", location,
 		)

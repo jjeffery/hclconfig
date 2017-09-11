@@ -1,5 +1,4 @@
-// Package astutil helps with parsing HCL and manipulating the AST.
-package astutil
+package astcrypt
 
 import (
 	"strings"

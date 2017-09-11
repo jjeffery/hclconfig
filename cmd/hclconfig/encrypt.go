@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/hcl/hcl/printer"
 	"github.com/jjeffery/errors"
 	"github.com/jjeffery/hclconfig/amzn"
-	"github.com/jjeffery/hclconfig/astutil"
+	"github.com/jjeffery/hclconfig/astcrypt"
 	"github.com/jjeffery/hclconfig/download"
 )
 
@@ -35,7 +35,7 @@ func decryptFile(location string, inplace bool) error {
 			"location", location,
 		)
 	}
-	if err = astutil.Decrypt(file, decrypter); err != nil {
+	if err = astcrypt.Decrypt(file, decrypter); err != nil {
 		return err
 	}
 	if err := printNode(file, inplace, location); err != nil {
@@ -67,7 +67,7 @@ func encryptFile(location string, inplace bool, keywords []string, values []stri
 			"location", location,
 		)
 	}
-	if err = astutil.Encrypt(file, encrypter, keywords, values); err != nil {
+	if err = astcrypt.Encrypt(file, encrypter, keywords, values); err != nil {
 		return err
 	}
 
