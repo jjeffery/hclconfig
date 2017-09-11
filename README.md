@@ -3,14 +3,14 @@
 [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/jjeffery/hclconfig/master/LICENSE.md)
 [![GoReportCard](https://goreportcard.com/badge/github.com/jjeffery/hclconfig)](https://goreportcard.com/report/github.com/jjeffery/hclconfig)
 
-Package hclconfig is designed to reduce the effort required acquire a 
-configuration file from a cloud-based server program.
+Package hclconfig is designed to reduce the effort required to access
+a configuration file.
 
 The main features this package provides are:
 
-* Download configuration from a HTTP/HTTPS URL, or an S3 URL or a local file.
-* Detect changes in the configuration file.
-* Provides encryption at rest for confidential information in the configuration file.
+* Download configuration via HTTP/HTTPS, from an S3 bucket or from a local file
+* Detect if the configuration file has changed since it was downloaded
+* Provide encryption at rest for confidential information in the configuration file
 
 This package is designed to work with configuration files that are in 
 [HCL](https://github.com/hashicorp/hcl) format. The reason for this choice
@@ -26,22 +26,22 @@ confidential information.
 // eg "/etc/my-ap-config.hcl"
 location := os.Getenv("CONFIG")
 
-// download the config file, and decrypt any confidential
-// information in that file
+// download the config file, and decrypt any confidential information
 file, err := hclconfig.Get(location)
 exitIfError(err)
 
 var db struct {
     Database struct {
-        Provider       string
-        DataSourceName string
+        Provider  string
+        SecretDSN string
     }
 }
 
+// decode the information we are after into db
 err = file.Decode(&db)
 exitIfError(err)
 
-db, err := sql.Open(db.Database.Provider, db.Database.DataSourceName)
+db, err := sql.Open(db.Database.Provider, db.Database.SecretDSN)
 exitIfError(err)
 
 // simple example of a goroutine that will initiate gracefult shutdown
@@ -55,39 +55,36 @@ go func() {
             initiateGracefulShutdown()
         }
     }
-}
+}()
 ```
 
 ## Encryption
 
-Encryption of confidential inforation in a configuration file is performed using
-[AWS KMS](https://aws.amazon.com/kms/). Other encryption providers could be
-implemented in a future version of this package.
-
 Confidential information is encrypted using AES-256 CBC + HMAC-SHA256.
+
+The 256-bit data encryption key is stored as a ciphertext blob in the
+configuration file. The data encryption key is encrypted using 
+[AWS KMS](https://aws.amazon.com/kms/). Other encryption providers could 
+be implemented in a future version of this package.
 
 Example of an unencrypted configuration file
 ```hcl
 database {
-    host = "db.example.com"
-    db = "production_db"
-    user = "scott"
-    password = "tiger"
+    provider = "postgres"
+    secretDSN = "user=produ password=s3cret dbname=proddb host=prodhost"
 }
 ```
 
 Example of an encrypted configuration file
 ```hcl
-// database access
 database {
-    host = "db.example.com"
-    db   = "production_db"
-    user = "scott"
+    provider = "postgres"
 
-    password {
+    secretDSN {
         ciphertext = <<END
-            IEJRl4p5ZzxvY5ssg4enfbxUXtNIgjxGOjZYUlOTlul+votlsZhifjrJ8ltqataesLjqE4KSDW
-            Uq4kMm5Eai4Q==
+            RPbAjbNg/2iRsbifmJ3cp4vP8DSM2k6jp7JIFvji3oWjWe50rO5bHFOhMTNfVpTA4T4CBdxJ08
+            1AkQOtOFLnj5F1YUzYFbqDW3j3wAvvDgT1lynt5F+DPT/CLQPC0llNKlMbAUAmliChGESdOL4f
+            Dw==
             END
     }
 }
